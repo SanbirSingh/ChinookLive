@@ -14,8 +14,7 @@ const Header = () => {
                 <img src={isDark ? "/logo.png" : "/logo2.png"} alt='logo' className='h-14' />
             </Link>
 
-            <div>
-                {/* {Search} */}
+            <div className='flex gap-4'>
                 <CitySearch />
                 {/* {theme toggle} */}
                 <div onClick={() => setTheme(isDark ? "light" : "dark")} 
