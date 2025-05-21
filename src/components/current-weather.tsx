@@ -93,4 +93,4 @@ const CurrentWeather = ({data, locationName} : CurrentWeatherProps) => {
   )
 }
 
-export default CurrentWeather
+export default CurrentWeather;

@@ -58,3 +58,18 @@ export interface GeocodingResponse {
     country: string;
     state?: string;
 }
+
+export interface TrafficCamera {
+    camera_url: {
+      url: string;
+      description: string;
+    };
+    quadrant: string;
+    camera_location: string;
+    point: {
+      type: string;
+      coordinates: [number, number]; // [longitude, latitude]
+    };
+    [key: string]: any; // For additional computed region fields
+  }
+  export interface TrafficCameraResponse extends Array<TrafficCamera> {}

@@ -8,6 +8,8 @@ import WeatherForecast from "@/components/weather-forecast";
 import { useForecastQuery, useWeatherQuery } from "@/hooks/use-weather";
 import { AlertTriangle } from "lucide-react";
 import { useParams, useSearchParams } from "react-router-dom"
+import MapCard from "@/components/ui/map-card";
+import { CalgaryTraffic } from "@/components/calgary-traffic";
 
 const CityPage = () => {
   const [searchParams] = useSearchParams();
@@ -56,12 +58,21 @@ const CityPage = () => {
           <HourlyTemperature data={forecastQuery.data} />
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 items-start">
-          <WeatherDetails data={weatherQuery.data} />
-
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-6">
+            <WeatherDetails data={weatherQuery.data} />
+            <MapCard 
+              lat={coordinates.lat} 
+              lng={coordinates.lon} 
+              locationName={params.cityName} 
+            />
+          </div>
           <WeatherForecast data={forecastQuery.data} />
         </div>
       </div>
+      {params.cityName?.toLowerCase() === 'calgary' && (
+        <CalgaryTraffic />
+      )}
     </div>
   )
 }
