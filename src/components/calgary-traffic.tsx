@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { trafficAPI } from "@/api/traffic-cam";
-import { GoogleMap, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, InfoWindow, useJsApiLoader } from "@react-google-maps/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { TrafficCamera } from "@/api/types";
 import { Button } from "./ui/button";
@@ -8,6 +8,12 @@ import { RefreshCw } from "lucide-react";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 export const CalgaryTraffic = () => {
+    // All hooks must be called unconditionally at the top level
+    const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
+    });
+
     const [cameras, setCameras] = useState<TrafficCamera[]>([]);
     const [selectedCamera, setSelectedCamera] = useState<TrafficCamera | null>(null);
     const [loading, setLoading] = useState(true);
@@ -131,6 +137,10 @@ export const CalgaryTraffic = () => {
             updateMarkers();
         }
     }, [cameras, mapReady]);
+
+    if (!isLoaded) {
+        return <div className="p-4 text-center">Loading Google Maps...</div>;
+    }
 
     if (loading) return <div className="p-4 text-center">Loading traffic cameras...</div>;
     if (error) return (
