@@ -21,7 +21,6 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const [userLocation, setUserLocation] = useState<{lat: number, lon: number} | null>(null);
   const [isCalgary, setIsCalgary] = useState(false);
   const calgaryCoordinates = { lat: 51.0447, lon: -114.0719 };
 
@@ -30,10 +29,8 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setUserLocation({ lat: latitude, lon: longitude });
         
         // Check if location is Calgary (within ~22km)
-        const calgaryCoordinates = { lat: 51.0447, lon: -114.0719 };
         const distance = Math.sqrt(
           Math.pow(latitude - calgaryCoordinates.lat, 2) + 
           Math.pow(longitude - calgaryCoordinates.lon, 2)
@@ -70,4 +67,5 @@ function App() {
     </QueryClientProvider>
   )
 }
+
 export default App
